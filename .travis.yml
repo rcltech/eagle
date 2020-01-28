@@ -1,0 +1,23 @@
+language: "node_js"
+os:
+  - linux
+node_js:
+  - "10"
+cache: npm
+stages:
+  - deploy-gh-pages
+jobs:
+  include:
+    - stage: deploy-gh-pages
+      install:
+        - npm install
+      script:
+        - npm run build
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN
+        keep_history: true
+        local_dir: ./build
+        on:
+          branch: master
