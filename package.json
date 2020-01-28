@@ -2,6 +2,7 @@
   "name": "eagle",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://eagle.rctech.club",
   "dependencies": {
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
