@@ -16,7 +16,9 @@ import { persistCache } from "apollo-cache-persist";
 import { PersistentStorage, PersistedData } from "apollo-cache-persist/types";
 
 const Index: React.FC = () => {
-  const [client, setClient] = useState();
+  const [client, setClient] = useState<ApolloClient<
+    NormalizedCacheObject
+  > | null>(null);
 
   useEffect(() => {
     // const authorization: string = localStorage.getItem("id");
