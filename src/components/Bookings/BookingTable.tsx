@@ -10,12 +10,13 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { TablePaginationActions } from "./TablePaginationActions";
+import { Actions } from "./Actions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    table: {
-      margin: theme.spacing(2),
-      width: "95vw",
+    root: {
+      width: "96vw",
+      margin: "auto",
     },
   })
 );
@@ -32,7 +33,7 @@ const createData = (number: string, start: Date, end: Date): Row => {
     number,
     start,
     end,
-    actions: <>actions</>,
+    actions: <Actions />,
   };
 };
 
@@ -98,8 +99,8 @@ export const BookingTable: React.FC = () => {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="bookings table">
+    <TableContainer component={Paper} classes={{ root: classes.root }}>
+      <Table size="small" aria-label="bookings table">
         <TableHead>
           <TableRow>
             {columns.map(column => (
