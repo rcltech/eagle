@@ -73,8 +73,8 @@ const columns: Column[] = [
   },
   {
     id: "actions",
-    label: "Actions",
-    minWidth: 200,
+    label: "",
+    minWidth: 30,
     align: "right",
   },
 ];
