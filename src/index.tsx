@@ -49,7 +49,7 @@ const Index: React.FC = () => {
     }).then(() => setClient(client));
   });
 
-  if (!client) return <>loading</>;
+  if (!client) return <></>;
 
   return (
     <ApolloProvider client={client}>
