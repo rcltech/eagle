@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
+import Typography from "@material-ui/core/Typography";
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Hello, World</h1>
+        <Typography color={"primary"}>Hello, World</Typography>
       </header>
     </div>
   );
