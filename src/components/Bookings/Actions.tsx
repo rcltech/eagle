@@ -9,6 +9,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EmailIcon from "@material-ui/icons/Email";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
+interface ActionsProps {
+  email: string;
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     optionsButton: {
@@ -19,8 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Actions: React.FC = () => {
+export const Actions = (props: ActionsProps) => {
   const classes = useStyles();
+  const { email } = props;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -64,7 +69,7 @@ export const Actions: React.FC = () => {
           component={Link}
           color="inherit"
           underline="none"
-          href="mailto:contacts@rctech.club"
+          href={`mailto:${email}`}
           target="_blank"
           referrerPolicy="no-referrer"
         >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -9,6 +9,8 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_ALL_BOOKINGS } from "../../graphql/booking";
 import { TablePaginationActions } from "./TablePaginationActions";
 import { Actions } from "./Actions";
 
@@ -21,39 +23,49 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface Row {
+interface Booking {
+  room: {
+    name: string;
+  };
+  start: Date;
+  end: Date;
+  user: {
+    email: string;
+  };
+}
+
+type Row = {
   room: string;
   start: Date;
   end: Date;
   actions: React.ReactNode;
-}
+};
 
-const createData = (room: string, start: Date, end: Date): Row => {
+const createData = (booking: Booking): Row => {
   return {
-    room,
-    start,
-    end,
-    actions: <Actions />,
+    room: booking.room.name,
+    start: booking.start,
+    end: booking.end,
+    actions: <Actions email={booking.user.email} />,
   };
 };
 
-const rows = [
-  createData("305", new Date(), new Date()),
-  createData("305", new Date(), new Date()),
-  createData("204", new Date(), new Date()),
-  createData("2f common", new Date(), new Date()),
-  createData("305", new Date(), new Date()),
-  createData("3f common", new Date(), new Date()),
-  createData("204", new Date(), new Date()),
+const defaultRows = [
+  createData({
+    room: { name: "" },
+    start: new Date(),
+    end: new Date(),
+    user: { email: "" },
+  }),
 ];
 
-interface Column {
+type Column = {
   id: "room" | "start" | "end" | "actions";
   label: string;
   minWidth?: number;
   align?: "right";
   format?: (value: Date) => string;
-}
+};
 
 const columns: Column[] = [
   { id: "room", label: "Booking room", minWidth: 100 },
@@ -83,6 +95,19 @@ export const BookingTable: React.FC = () => {
   const classes = useStyles();
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [rows, setRows] = useState<Row[]>(defaultRows);
+
+  const { data, loading, error } = useQuery(GET_ALL_BOOKINGS);
+
+  useEffect(() => {
+    if (data && data.bookings) {
+      const rows = data.bookings.map((booking: Booking) => createData(booking));
+      setRows(rows);
+    }
+  }, [data]);
+
+  if (loading) return <>loading</>;
+  if (error) console.log(error);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
