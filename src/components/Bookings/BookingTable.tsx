@@ -22,15 +22,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Row {
-  number: string;
+  room: string;
   start: Date;
   end: Date;
   actions: React.ReactNode;
 }
 
-const createData = (number: string, start: Date, end: Date): Row => {
+const createData = (room: string, start: Date, end: Date): Row => {
   return {
-    number,
+    room,
     start,
     end,
     actions: <Actions />,
@@ -48,7 +48,7 @@ const rows = [
 ];
 
 interface Column {
-  id: "number" | "start" | "end" | "actions";
+  id: "room" | "start" | "end" | "actions";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -56,7 +56,7 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "number", label: "Booking room", minWidth: 100 },
+  { id: "room", label: "Booking room", minWidth: 100 },
   {
     id: "start",
     label: "Time in",
