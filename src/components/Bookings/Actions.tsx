@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const Actions = (props: ActionsProps) => {
+export const Actions: React.FC<ActionsProps> = props => {
   const classes = useStyles();
   const { email } = props;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

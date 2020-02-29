@@ -52,10 +52,10 @@ const createData = (booking: Booking): Row => {
 
 const defaultRows = [
   createData({
-    room: { name: "" },
+    room: { name: "example room" },
     start: new Date(),
     end: new Date(),
-    user: { email: "" },
+    user: { email: "example user" },
   }),
 ];
 
@@ -63,7 +63,7 @@ type Column = {
   id: "room" | "start" | "end" | "actions";
   label: string;
   minWidth?: number;
-  align?: "right";
+  align?: "left" | "center" | "right";
   format?: (value: Date) => string;
 };
 
@@ -73,14 +73,14 @@ const columns: Column[] = [
     id: "start",
     label: "Time in",
     minWidth: 200,
-    align: "right",
+    align: "center",
     format: (value: Date): string => value.toISOString(),
   },
   {
     id: "end",
     label: "Time out",
     minWidth: 200,
-    align: "right",
+    align: "center",
     format: (value: Date): string => value.toISOString(),
   },
   {
@@ -101,7 +101,9 @@ export const BookingTable: React.FC = () => {
 
   useEffect(() => {
     if (data && data.bookings) {
-      const rows = data.bookings.map((booking: Booking) => createData(booking));
+      const rows: Row[] = data.bookings.map((booking: Booking) =>
+        createData(booking)
+      );
       setRows(rows);
     }
   }, [data]);
