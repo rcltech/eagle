@@ -21,7 +21,7 @@ const Index: React.FC = () => {
   > | null>(null);
 
   useEffect(() => {
-    // const authorization: string = localStorage.getItem("id");
+    const authorization: string | null = localStorage.getItem("id");
     const uri: string =
       process.env.NODE_ENV === "development"
         ? "http://localhost:4000/graphql"
@@ -29,9 +29,9 @@ const Index: React.FC = () => {
 
     const link = new HttpLink({
       uri,
-      // headers: {
-      //   authorization,
-      // },
+      headers: {
+        authorization,
+      },
     });
 
     const cache = new InMemoryCache();
@@ -47,7 +47,7 @@ const Index: React.FC = () => {
         PersistedData<NormalizedCacheObject>
       >,
     }).then(() => setClient(client));
-  });
+  }, []);
 
   if (!client) return <>loading</>;
 
